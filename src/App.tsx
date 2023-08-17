@@ -1,24 +1,27 @@
-import undpLogo from './assets/undp-logo-blue.svg';
+import { csv } from 'd3-fetch';
+import { useEffect, useState } from 'react';
+import { DebtGdp, CategoryData } from './Types';
+import { RegionLineChart } from './RegionLineChart';
 
 function App() {
+  const [debtToGdpData, setDebtToGdpData] = useState<DebtGdp[] | undefined>();
+  const [categoriesData, setCategoriesData] = useState<
+    CategoryData[] | undefined
+  >(undefined);
+  useEffect(() => {
+    Promise.all([
+      csv('./data/debtToGdp.csv'),
+      csv('./data/categories.csv'),
+    ]).then(([data, categories]) => {
+      setDebtToGdpData(data);
+      setCategoriesData(categories);
+    });
+  }, []);
   return (
-    <div className='undp-container flex-div flex-wrap flex-hor-align-center margin-top-13 margin-bottom-13'>
-      <div>
-        <img
-          src={undpLogo}
-          className='logo react'
-          alt='React logo'
-          width='72px'
-          style={{ margin: 'auto' }}
-        />
-      </div>
-      <h3
-        className='undp-typography'
-        style={{ textAlign: 'center', width: '100%' }}
-      >
-        This is template for building visualization and frontend project for
-        UNDP Data Futures Platform
-      </h3>
+    <div className='undp-container'>
+      {debtToGdpData && categoriesData ? (
+        <RegionLineChart data={debtToGdpData} categories={categoriesData} />
+      ) : null}
     </div>
   );
 }
