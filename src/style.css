@@ -1,0 +1,22 @@
+/* general charts styles */
+.chart-container{
+  background-color: var(--gray-200);
+  padding: 24px 32px;
+  position:relative;
+}
+.yAxis text, .xAxis text{
+  font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
+  font-size: 1rem;
+  fill: var(--gray-600);
+}
+.axis-label{
+  font-weight: 700;
+}
+.yAxis line{
+  stroke-dasharray: 4;
+  stroke: var(--gray-500);
+}
+.source{
+  font-size: 1rem;
+  color: var(--gray-500);
+}

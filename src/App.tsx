@@ -2,6 +2,7 @@ import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { DebtGdp, CategoryData } from './Types';
 import { RegionLineChart } from './RegionLineChart';
+import './style.css';
 
 function App() {
   const [debtToGdpData, setDebtToGdpData] = useState<DebtGdp[] | undefined>();

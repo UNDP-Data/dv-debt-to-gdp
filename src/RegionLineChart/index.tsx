@@ -18,13 +18,11 @@ const GraphDiv = styled.div`
     max-height: 31.25rem;
   }
 `;
-const totalExternalOptions = ['total', 'external'];
 const meanMedianOptions = ['Mean', 'Median'];
 
 export function RegionLineChart(props: Props) {
   const { data, categories } = props;
   const [meanMedianSelection, setMeanMedianSelection] = useState('Mean');
-  const [totalExternalSelection, setTotalExternalSelection] = useState('total');
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
@@ -38,35 +36,7 @@ export function RegionLineChart(props: Props) {
   return (
     <GraphDiv ref={graphDiv}>
       <div>
-        <div className='flex-div flex-wrap'>
-          <div>
-            <p className='label undp-typography'>Select</p>
-            <Radio.Group
-              defaultValue={meanMedianSelection}
-              onChange={(el: RadioChangeEvent) =>
-                setMeanMedianSelection(el.target.value)
-              }
-            >
-              {meanMedianOptions.map((d, i) => (
-                <Radio key={i} className='undp-radio' value={d}>
-                  {d}
-                </Radio>
-              ))}
-            </Radio.Group>
-          </div>
-          <div>
-            <p className='label undp-typography'>Select</p>
-            <Select
-              options={totalExternalOptions.map(option => ({
-                label: option,
-                value: option,
-              }))}
-              className='undp-select'
-              style={{ width: '100%' }}
-              onChange={el => setTotalExternalSelection(el)}
-              value={totalExternalSelection}
-            />
-          </div>
+        <div className='margin-bottom-05'>
           <div>
             <p className='label undp-typography'>Select a category</p>
             <Select
@@ -85,15 +55,39 @@ export function RegionLineChart(props: Props) {
           </div>
         </div>
       </div>
-      {svgHeight && svgWidth ? (
-        <Graph
-          data={data.filter(d => d.region === categorySelection)} /// filter data by category
-          indicator={totalExternalSelection}
-          option={meanMedianSelection}
-          svgWidth={svgWidth}
-          svgHeight={svgHeight}
-        />
-      ) : null}
+      <div className='chart-container'>
+        <div className='flex-div flex-space-between flex-wrap margin-bottom-03'>
+          <div>
+            <h6 className='undp-typography margin-bottom-01'>
+              General government debt as a percentage of GDP
+            </h6>
+            <p className='undp-typography small-font'>Years: 2000-2023</p>
+          </div>
+          <div>
+            <Radio.Group
+              defaultValue={meanMedianSelection}
+              onChange={(el: RadioChangeEvent) =>
+                setMeanMedianSelection(el.target.value)
+              }
+            >
+              {meanMedianOptions.map((d, i) => (
+                <Radio key={i} className='undp-radio' value={d}>
+                  {d}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </div>
+        </div>
+        {svgHeight && svgWidth ? (
+          <Graph
+            data={data.filter(d => d.region === categorySelection)}
+            option={meanMedianSelection}
+            svgWidth={svgWidth}
+            svgHeight={svgHeight}
+          />
+        ) : null}
+        <p className='source'>Source:</p>
+      </div>
     </GraphDiv>
   );
 }
