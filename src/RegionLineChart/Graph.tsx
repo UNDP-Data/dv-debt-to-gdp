@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { line, curveMonotoneX } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { min, max, extent } from 'd3-array';
@@ -33,17 +33,14 @@ const XTickText = styled.text`
 /// two lines for mean and median
 export function Graph(props: Props) {
   const { data, option, svgWidth, svgHeight } = props;
-  console.log('data', data);
+  // console.log('data', data);
   // const indicatorName = `${indicator}Debt${option}`;
   // console.log('indicator', indicatorName);
   const indicators = ['total', 'external'];
-  /* const [hoveredCountry, setHoveredCountry] = useState<undefined | string>(
-    undefined,
-  ); */
-  const margin = { top: 20, right: 10, bottom: 50, left: 80 };
+  const margin = { top: 20, right: 30, bottom: 50, left: 80 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
-
+  const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
   const valueArray: number[] = data.map((d: any) =>
     Number(d[`totalDebt${option}`]),
   );
@@ -112,8 +109,57 @@ export function Graph(props: Props) {
                       ) as string
                     }
                     fill='none'
-                    stroke={UNDPColorModule.graphGray}
+                    stroke={UNDPColorModule.categoricalColors.colors[i]}
                     strokeWidth={2}
+                  />
+                </g>
+              ))}
+            </g>
+            <g className='overlay'>
+              {data.map((d, i) => (
+                <g
+                  className='focus'
+                  style={{ display: 'block' }}
+                  key={i}
+                  transform={`translate(${x(Number(d.year))},0)`}
+                >
+                  <line
+                    x1={0}
+                    y1={0}
+                    x2={0}
+                    y2={svgHeight - margin.bottom - margin.top}
+                    stroke='#FFF'
+                    strokeWidth={2}
+                    opacity={hoveredYear === d.year ? 1 : 0}
+                  />
+                  {indicators.map((k, j) => (
+                    <g
+                      key={j}
+                      transform={`translate(0,${y(
+                        (d as any)[`${k}Debt${option}`],
+                      )})`}
+                    >
+                      <circle
+                        r={hoveredYear === d.year ? 5 : 3}
+                        fill={UNDPColorModule.categoricalColors.colors[j]}
+                      />
+                      <text x={5} opacity={hoveredYear === d.year ? 1 : 0}>
+                        {(d as any)[`${k}Debt${option}`]}%
+                      </text>
+                    </g>
+                  ))}
+                  <rect
+                    onMouseEnter={() => {
+                      setHoveredYear(d.year);
+                    }}
+                    onMouseLeave={() => {
+                      setHoveredYear(undefined);
+                    }}
+                    x='-15px'
+                    y={0}
+                    width='30px'
+                    height={svgHeight}
+                    opacity={0}
                   />
                 </g>
               ))}
@@ -129,9 +175,7 @@ export function Graph(props: Props) {
           </text>
         </svg>
       ) : (
-        <div className='center-area-error-el'>
-          No data available for the countries selected
-        </div>
+        <div className='center-area-error-el'>No data available</div>
       )}
     </div>
   );
