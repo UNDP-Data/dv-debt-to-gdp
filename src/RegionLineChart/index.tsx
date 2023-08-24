@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Select, Radio, RadioChangeEvent } from 'antd';
 import styled from 'styled-components';
+import UNDPColorModule from 'undp-viz-colors';
 import { DebtGdp, CategoryData } from '../Types';
 import { Graph } from './Graph';
 
@@ -34,7 +35,7 @@ export function RegionLineChart(props: Props) {
     }
   }, [graphDiv]);
   return (
-    <GraphDiv ref={graphDiv}>
+    <GraphDiv ref={graphDiv} style={{ maxWidth: '900px', maxHeight: '600px' }}>
       <div>
         <div className='margin-bottom-05'>
           <div>
@@ -48,7 +49,6 @@ export function RegionLineChart(props: Props) {
               style={{ width: '100%' }}
               onChange={el => {
                 setCategorySelection(el);
-                console.log('categorySelection', el, categorySelection);
               }}
               value={categorySelection}
             />
@@ -61,7 +61,31 @@ export function RegionLineChart(props: Props) {
             <h6 className='undp-typography margin-bottom-01'>
               General government debt as a percentage of GDP
             </h6>
-            <p className='undp-typography small-font'>Years: 2000-2023</p>
+            <p className='undp-typography small-font margin-bottom-01'>
+              Years: 2000-2023
+            </p>
+            <div className='legend-container'>
+              <div className='legend-item'>
+                <div
+                  className='legend-circle-medium'
+                  style={{
+                    backgroundColor:
+                      UNDPColorModule.categoricalColors.colors[0],
+                  }}
+                />
+                <div className='small-font'>Total</div>
+              </div>
+              <div className='legend-item'>
+                <div
+                  className='legend-circle-medium'
+                  style={{
+                    backgroundColor:
+                      UNDPColorModule.categoricalColors.colors[1],
+                  }}
+                />
+                <div className='small-font'>External</div>
+              </div>
+            </div>
           </div>
           <div>
             <Radio.Group

@@ -7,7 +7,12 @@
 .yAxis text, .xAxis text{
   font-family: 'ProximaNova', 'proxima-nova', 'Helvetica Neue', 'sans-serif';
   font-size: 1rem;
-  fill: var(--gray-600);
+}
+.yAxis text{
+  fill: #A9B1B7;
+}
+.xAxis text{
+  fill: #000;
 }
 .axis-label{
   font-weight: 700;
@@ -15,8 +20,42 @@
 .yAxis line{
   stroke-dasharray: 4;
   stroke: var(--gray-500);
+  stroke-width: 1;
 }
 .source{
   font-size: 1rem;
   color: var(--gray-500);
+}
+/* color legend styles for charts */
+.legend-container{
+  display: flex;
+  flex-wrap: wrap;
+  height: 40px;
+  padding-bottom: 0px;
+  align-items: center;
+}
+.legend-item{
+  display: flex;
+  flex-wrap: no-wrap;
+  align-items: center;
+  gap: 8px;
+  margin-right: 1rem;
+}
+.legend-circle{
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  margin: 0;
+}
+.legend-circle-small{
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  margin: 0;
+}
+.legend-circle-medium{
+  width: 11px;
+  height: 11px;
+  border-radius: 11px;
+  margin: 0;
 }

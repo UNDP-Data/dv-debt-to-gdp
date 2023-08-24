@@ -33,9 +33,6 @@ const XTickText = styled.text`
 /// two lines for mean and median
 export function Graph(props: Props) {
   const { data, option, svgWidth, svgHeight } = props;
-  // console.log('data', data);
-  // const indicatorName = `${indicator}Debt${option}`;
-  // console.log('indicator', indicatorName);
   const indicators = ['total', 'external'];
   const margin = { top: 20, right: 30, bottom: 50, left: 80 };
   const graphWidth = svgWidth - margin.left - margin.right;
@@ -138,6 +135,12 @@ export function Graph(props: Props) {
                       transform={`translate(0,${y(
                         (d as any)[`${k}Debt${option}`],
                       )})`}
+                      style={{
+                        display:
+                          (d as any)[`${k}Debt${option}`] !== ''
+                            ? 'block'
+                            : 'none',
+                      }}
                     >
                       <circle
                         r={hoveredYear === d.year ? 5 : 3}
@@ -164,6 +167,14 @@ export function Graph(props: Props) {
                 </g>
               ))}
             </g>
+            <line
+              x1={0}
+              y1={svgHeight - margin.bottom - margin.top}
+              x2={svgWidth - margin.right - margin.left}
+              y2={svgHeight - margin.bottom - margin.top}
+              stroke='#232E3D'
+              strokeWidth={2}
+            />
           </g>
           <text
             x={-graphHeight / 2}

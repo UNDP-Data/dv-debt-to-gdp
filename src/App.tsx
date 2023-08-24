@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { csv } from 'd3-fetch';
 import { useEffect, useState } from 'react';
 import { DebtGdp, CategoryData } from './Types';
@@ -11,11 +12,11 @@ function App() {
   >(undefined);
   useEffect(() => {
     Promise.all([
-      csv('./data/debtToGdp.csv'),
+      csv('./data/debtToGDPall.csv'),
       csv('./data/categories.csv'),
     ]).then(([data, categories]) => {
-      setDebtToGdpData(data);
-      setCategoriesData(categories);
+      setDebtToGdpData(data as any);
+      setCategoriesData(categories as any);
     });
   }, []);
   return (

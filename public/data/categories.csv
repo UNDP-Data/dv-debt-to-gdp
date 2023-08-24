@@ -4,18 +4,15 @@ LIC,Low income / WB,WB,Income
 LMC,Lower middle income / WB,WB,Income
 UMC,Upper middle income / WB,WB,Income
 MIC,Middle income / WB,WB,Income
-HIC,High income / WB,WB,Income
 LDC,Least developed country using UN classification,UN,
 SIDS,Small island developing state / UN classification,UN,
-AE,Advanced Economy / IMF,IMF,
 EM,Emerging market / IMF,IMF,
 LIDC,Low income developing country / IMF,IMF,
 Poorest (IDA eligible),IDA eligible countries ,,
 HIPC,Heavily indebted poor countries,,
-South Asia, ,,Geographical
-Europe & Central Asia, ,,Geographical
-Middle East & North Africa, ,,Geographical
-East Asia & Pacific, ,,Geographical
-Latin America & Caribbean, ,,Geographical
-Sub-Saharan Africa, ,,Geographical
-North America, ,,Geographical
+South Asia,South Asia,,Geographical
+Europe & Central Asia,Europe & Central Asia,,Geographical
+Middle East & North Africa,Middle East & North Africa,,Geographical
+East Asia & Pacific,East Asia & Pacific,,Geographical
+Latin America & Caribbean,Latin America & Caribbean,,Geographical
+Sub-Saharan Africa,Sub-Saharan Africa,,Geographical
