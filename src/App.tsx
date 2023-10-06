@@ -10,10 +10,12 @@ function App() {
   const [categoriesData, setCategoriesData] = useState<
     CategoryData[] | undefined
   >(undefined);
+  const dataurl =
+  'https://raw.githubusercontent.com/UNDP-Data/dv-debt-to-gdp/main/public/data/';
   useEffect(() => {
     Promise.all([
-      csv('./data/debtToGDPall.csv'),
-      csv('./data/categories.csv'),
+      csv(`${dataurl}data/debtToGDPall.csv`),
+      csv(`${dataurl}data/categories.csv`),
     ]).then(([data, categories]) => {
       setDebtToGdpData(data as any);
       setCategoriesData(categories as any);

@@ -1,15 +1,15 @@
 category,description,source,group
-All developing,All low and middle income countries using WB classification,,
-LIC,Low income / WB,WB,Income
-LMC,Lower middle income / WB,WB,Income
-UMC,Upper middle income / WB,WB,Income
-MIC,Middle income / WB,WB,Income
-LDC,Least developed country using UN classification,UN,
-SIDS,Small island developing state / UN classification,UN,
-EM,Emerging market / IMF,IMF,
-LIDC,Low income developing country / IMF,IMF,
+All developing,All developing (DE),,
+LIC,Low income (LIC),WB,Income
+LMC,Lower-middle income (LMC),WB,Income
+UMC,Upper-middle income (UMC),WB,Income
+MIC,Middle-income (MIC),WB,Income
+LDC,Least developed (LDC),UN,
+SIDS,Small Island Developing (SIDS),UN,
+EM,Emerging Market (EM),IMF,
+LIDC,Low-income developing (LIDC),IMF,
 Poorest (IDA eligible),IDA eligible countries ,,
-HIPC,Heavily indebted poor countries,,
+HIPC,Heavily indebted poor (HIPC),,
 South Asia,South Asia,,Geographical
 Europe & Central Asia,Europe & Central Asia,,Geographical
 Middle East & North Africa,Middle East & North Africa,,Geographical

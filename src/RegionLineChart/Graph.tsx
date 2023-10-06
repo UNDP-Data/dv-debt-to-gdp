@@ -48,10 +48,10 @@ export function Graph(props: Props) {
       : min(valueArray)
     : 0;
   const maxParam = max(valueArray) ? max(valueArray) : 0;
-  const dateRange = extent(data.map((d: any) => Number(d.year)));
+  const dateDomain = extent(data.map((d: any) => Number(d.year)));
 
   const x = scaleLinear()
-    .domain(dateRange as [number, number])
+    .domain(dateDomain as [number, number])
     .range([0, graphWidth]);
   const y = scaleLinear()
     .domain([minParam as number, maxParam as number])
@@ -124,7 +124,7 @@ export function Graph(props: Props) {
                     x1={0}
                     y1={0}
                     x2={0}
-                    y2={svgHeight - margin.bottom - margin.top}
+                    y2={graphHeight}
                     stroke='#FFF'
                     strokeWidth={2}
                     opacity={hoveredYear === d.year ? 1 : 0}
@@ -169,9 +169,9 @@ export function Graph(props: Props) {
             </g>
             <line
               x1={0}
-              y1={svgHeight - margin.bottom - margin.top}
-              x2={svgWidth - margin.right - margin.left}
-              y2={svgHeight - margin.bottom - margin.top}
+              y1={graphHeight}
+              x2={graphWidth}
+              y2={graphHeight}
               stroke='#232E3D'
               strokeWidth={2}
             />
