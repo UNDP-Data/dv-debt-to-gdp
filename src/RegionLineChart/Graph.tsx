@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { line, curveMonotoneX } from 'd3-shape';
+import { line, curveMonotoneX, area } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
-import { min, max, extent } from 'd3-array';
+import { min, max } from 'd3-array';
 // import { format } from 'd3-format';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { select } from 'd3-selection';
@@ -33,22 +33,22 @@ const XTickText = styled.text`
 /// two lines for mean and median
 export function Graph(props: Props) {
   const { data, option, svgWidth, svgHeight } = props;
-  const indicators = ['total', 'external'];
+  const indicators = ['Median', 'Q1', 'Q3'];
   const margin = { top: 20, right: 30, bottom: 50, left: 80 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
   const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
   const valueArray: number[] = data.map((d: any) =>
-    Number(d[`totalDebt${option}`]),
+    Number(d[`${option}DebtQ3`]),
   );
-
+  console.log('valueArray', valueArray);
   const minParam = min(valueArray)
     ? (min(valueArray) as number) > 0
       ? 0
       : min(valueArray)
     : 0;
   const maxParam = max(valueArray) ? max(valueArray) : 0;
-  const dateDomain = extent(data.map((d: any) => Number(d.year)));
+  const dateDomain = option === 'total' ? [2000, 2023] : [2000, 2021];
 
   const x = scaleLinear()
     .domain(dateDomain as [number, number])
@@ -72,6 +72,12 @@ export function Graph(props: Props) {
       .x((d: any) => x(d.year))
       .y((d: any) => y(d[indicator]))
       .curve(curveMonotoneX);
+  const areaBetween = area()
+    .x0((d: any) => x(d.year))
+    .x1((d: any) => x(d.year))
+    .y0((d: any) => y(d[`${option}DebtQ1`]))
+    .y1((d: any) => y(d[`${option}DebtQ3`]))
+    .curve(curveMonotoneX);
 
   useEffect(() => {
     const svg = select('#debtToGdpLine');
@@ -97,11 +103,17 @@ export function Graph(props: Props) {
             <g className='xAxis' transform={`translate(0 ,${graphHeight})`} />
             <g className='yAxis' transform='translate(0,0)' />
             <g>
+              <path
+                d={areaBetween(data as any) as string}
+                fill='#FFF'
+                strokeWidth={2}
+                opacity='0.9'
+              />
               {indicators.map((d, i) => (
                 <g key={i}>
                   <path
                     d={
-                      lineShape1(`${d}Debt${option}` as string)(
+                      lineShape1(`${option}Debt${d}` as string)(
                         data as any,
                       ) as string
                     }
@@ -133,11 +145,11 @@ export function Graph(props: Props) {
                     <g
                       key={j}
                       transform={`translate(0,${y(
-                        (d as any)[`${k}Debt${option}`],
+                        (d as any)[`${option}Debt${k}`],
                       )})`}
                       style={{
                         display:
-                          (d as any)[`${k}Debt${option}`] !== ''
+                          (d as any)[`${option}Debt${k}`] !== ''
                             ? 'block'
                             : 'none',
                       }}
@@ -147,7 +159,7 @@ export function Graph(props: Props) {
                         fill={UNDPColorModule.categoricalColors.colors[j]}
                       />
                       <text x={5} opacity={hoveredYear === d.year ? 1 : 0}>
-                        {(d as any)[`${k}Debt${option}`]}%
+                        {(d as any)[`${option}Debt${k}`]}%
                       </text>
                     </g>
                   ))}

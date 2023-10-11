@@ -19,15 +19,16 @@ const GraphDiv = styled.div`
     max-height: 31.25rem;
   }
 `;
-const meanMedianOptions = ['Mean', 'Median'];
+const totalExternalOptions = ['total', 'external'];
 
 export function RegionLineChart(props: Props) {
   const { data, categories } = props;
-  const [meanMedianSelection, setMeanMedianSelection] = useState('Mean');
+  const [totalExternalSelection, setTotalExternalSelection] = useState('total');
   const [categorySelection, setCategorySelection] = useState('All developing');
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
   const graphDiv = useRef<HTMLDivElement>(null);
+  console.log('data', data, 'categories', categories);
   useEffect(() => {
     if (graphDiv.current) {
       setSvgHeight(graphDiv.current.clientHeight);
@@ -89,12 +90,12 @@ export function RegionLineChart(props: Props) {
           </div>
           <div>
             <Radio.Group
-              defaultValue={meanMedianSelection}
+              defaultValue={totalExternalSelection}
               onChange={(el: RadioChangeEvent) =>
-                setMeanMedianSelection(el.target.value)
+                setTotalExternalSelection(el.target.value)
               }
             >
-              {meanMedianOptions.map((d, i) => (
+              {totalExternalOptions.map((d, i) => (
                 <Radio key={i} className='undp-radio' value={d}>
                   {d}
                 </Radio>
@@ -105,7 +106,7 @@ export function RegionLineChart(props: Props) {
         {svgHeight && svgWidth ? (
           <Graph
             data={data.filter(d => d.region === categorySelection)}
-            option={meanMedianSelection}
+            option={totalExternalSelection}
             svgWidth={svgWidth}
             svgHeight={svgHeight}
           />
