@@ -29,19 +29,22 @@ const XTickText = styled.text`
     display: none;
   }
 `; */
-
+const colors = {
+  Median: UNDPColorModule.categoricalColors.colors[0],
+  Q1: UNDPColorModule.categoricalColors.colors[1],
+  Q3: UNDPColorModule.categoricalColors.colors[1],
+};
 /// two lines for mean and median
 export function Graph(props: Props) {
   const { data, option, svgWidth, svgHeight } = props;
   const indicators = ['Median', 'Q1', 'Q3'];
-  const margin = { top: 20, right: 30, bottom: 50, left: 80 };
+  const margin = { top: 20, right: 40, bottom: 50, left: 80 };
   const graphWidth = svgWidth - margin.left - margin.right;
   const graphHeight = svgHeight - margin.top - margin.bottom;
   const [hoveredYear, setHoveredYear] = useState<undefined | string>(undefined);
   const valueArray: number[] = data.map((d: any) =>
     Number(d[`${option}DebtQ3`]),
   );
-  console.log('valueArray', valueArray);
   const minParam = min(valueArray)
     ? (min(valueArray) as number) > 0
       ? 0
@@ -104,10 +107,14 @@ export function Graph(props: Props) {
             <g className='yAxis' transform='translate(0,0)' />
             <g>
               <path
-                d={areaBetween(data as any) as string}
-                fill='#FFF'
+                d={
+                  areaBetween(
+                    data.filter(k => (k as any)[`${option}DebtMedian`]) as any,
+                  ) as string
+                }
+                fill={(colors as any).Q1}
                 strokeWidth={2}
-                opacity='0.9'
+                opacity='0.2'
               />
               {indicators.map((d, i) => (
                 <g key={i}>
@@ -118,7 +125,7 @@ export function Graph(props: Props) {
                       ) as string
                     }
                     fill='none'
-                    stroke={UNDPColorModule.categoricalColors.colors[i]}
+                    stroke={(colors as any)[d]}
                     strokeWidth={2}
                   />
                 </g>
@@ -156,9 +163,13 @@ export function Graph(props: Props) {
                     >
                       <circle
                         r={hoveredYear === d.year ? 5 : 3}
-                        fill={UNDPColorModule.categoricalColors.colors[j]}
+                        fill={(colors as any)[k]}
                       />
-                      <text x={5} opacity={hoveredYear === d.year ? 1 : 0}>
+                      <text
+                        x={-25}
+                        y={-5}
+                        opacity={hoveredYear === d.year ? 1 : 0}
+                      >
                         {(d as any)[`${option}Debt${k}`]}%
                       </text>
                     </g>

@@ -28,7 +28,6 @@ export function RegionLineChart(props: Props) {
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
   const graphDiv = useRef<HTMLDivElement>(null);
-  console.log('data', data, 'categories', categories);
   useEffect(() => {
     if (graphDiv.current) {
       setSvgHeight(graphDiv.current.clientHeight);
@@ -74,7 +73,7 @@ export function RegionLineChart(props: Props) {
                       UNDPColorModule.categoricalColors.colors[0],
                   }}
                 />
-                <div className='small-font'>Total</div>
+                <div className='small-font'>Median</div>
               </div>
               <div className='legend-item'>
                 <div
@@ -84,7 +83,7 @@ export function RegionLineChart(props: Props) {
                       UNDPColorModule.categoricalColors.colors[1],
                   }}
                 />
-                <div className='small-font'>External</div>
+                <div className='small-font'>Interquartile range</div>
               </div>
             </div>
           </div>
