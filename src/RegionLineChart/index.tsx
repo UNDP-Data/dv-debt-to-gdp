@@ -35,7 +35,7 @@ export function RegionLineChart(props: Props) {
     }
   }, [graphDiv]);
   return (
-    <GraphDiv ref={graphDiv} style={{ maxWidth: '900px', maxHeight: '600px' }}>
+    <GraphDiv ref={graphDiv}>
       <div>
         <div className='margin-bottom-05'>
           <div>
